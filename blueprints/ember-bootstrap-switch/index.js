@@ -8,7 +8,7 @@ module.exports = {
   }, // :normalizeEntityName
 
   afterInstall: function(options) {
-    return addon.addBowerPackageToProject('bootstrap-switch', '^3.3.1');
+    return this.addBowerPackageToProject('bootstrap-switch', '^3.3.1');
   } // :afterInstall
 
 };
