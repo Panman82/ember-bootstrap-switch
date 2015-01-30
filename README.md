@@ -307,6 +307,9 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   radioValue: null,
+  bazASelected: Ember.computed.equals('radioValue', 'bazA'),
+  bazBSelected: Ember.computed.equals('radioValue', 'bazB'),
+  bazCSelected: Ember.computed.equals('radioValue', 'bazC'),
   actions: {
     switchChanged: function(component, event, state){
       // 'state' will typically always be `true`,
@@ -320,9 +323,9 @@ export default Ember.Controller.extend({
 
 ```
 {{!-- app/templates/foobar.js --}}
-{{bs-switch name="baz" value="bazA" checked="true"  on-switch-change="switchChanged"}}
-{{bs-switch name="baz" value="bazB" checked="false" on-switch-change="switchChanged"}}
-{{bs-switch name="baz" value="bazC" checked="false" on-switch-change="switchChanged"}}
+{{bs-switch name="baz" value="bazA" checked=bazASelected on-switch-change="switchChanged"}}
+{{bs-switch name="baz" value="bazB" checked=bazASelected on-switch-change="switchChanged"}}
+{{bs-switch name="baz" value="bazC" checked=bazASelected on-switch-change="switchChanged"}}
 ```
 
 This documentation will be updated once the bootstrap-switch radio issues are fixed.
