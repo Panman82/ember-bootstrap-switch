@@ -149,9 +149,10 @@ wrapper-class    | wrapperClass   |       |
 
 #### Action Handlers
 
-The Component also captures bootstrap-switch events and exposes them as Ember actions.
-Depending on the event/action, your function signature differs (below). Each action
-handler has access to the Component, which you can manipulate as needed, including:
+The Component also captures [bootstrap-switch events](http://www.bootstrap-switch.org/events.html)
+and exposes them as Ember actions. Depending on the event/action, your function
+signature differs (below). Each action handler has access to the Component, which
+you can manipulate as needed, including:
 
 ```javascript
 function(component) {
