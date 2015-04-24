@@ -63,7 +63,8 @@ as an 'ember-bootstrap-switch' object property. Available options include:
 * `excludeCSS` [boolean]: By default, the theme's `bootstrap-switch.css` file will be imported
 * `excludeJS` [boolean]: By default, the `bootstrap-switch.js` file will be imported from Bootstrap
 
-Typically you'll
+Typically you won't need to adjust any settings. However, if you want to use
+SASS/LESS instead of the default CSS you can exclude it from being imported. Ex:
 
 ```javascript
 // Brocfile.js
