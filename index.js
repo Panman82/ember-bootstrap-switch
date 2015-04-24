@@ -13,8 +13,17 @@ module.exports = {
   included: function(app) {
 
 
+    // Addon options from the apps Brocfile.js
+    var options = app.options[this.name] || {};
+
+
+    // Version of bootstrap-switch to use
+    options.boostrapVersion = options.bootstrapVersion || 3;
+
+
     // Path to bootstrap-switch in bower
-    var bootstrapSwitchPath = app.bowerDirectory + '/bootstrap-switch/dist';
+    var bootstrapSwitchPath    = app.bowerDirectory  + '/bootstrap-switch/dist';
+    var bootstrapSwitchCssPath = bootstrapSwitchPath + '/css/bootstrap' + options.boostrapVersion;
 
 
     // Make sure bootstrap-switch is available
@@ -26,18 +35,31 @@ module.exports = {
     }
 
 
+    // Make sure bootstrap-switch css is available
+    if (!options.excludeCSS && !fs.existsSync(bootstrapSwitchCssPath)) {
+      throw new Error(
+        this.name + ': bootstrap-switch css version is not available from bower (' + bootstrapSwitchCssPath + '), ' +
+        'if you specify the `bootstrapVersion` be sure it is a valid option (currently 2 or 3)'
+      );
+    }
+
+
     // Import bootstrap-switch js
-    app.import({
-      development: bootstrapSwitchPath + '/js/bootstrap-switch.js',
-      production:  bootstrapSwitchPath + '/js/bootstrap-switch.min.js'
-    });
+    if (!options.excludeJS) {
+      app.import({
+        development: bootstrapSwitchPath + '/js/bootstrap-switch.js',
+        production:  bootstrapSwitchPath + '/js/bootstrap-switch.min.js'
+      });
+    }
 
 
     // Import bootstrap-switch css
-    app.import({
-      development: bootstrapSwitchPath + '/css/bootstrap3/bootstrap-switch.css',
-      production:  bootstrapSwitchPath + '/css/bootstrap3/bootstrap-switch.min.css'
-    });
+    if (!options.excludeCSS) {
+      app.import({
+        development: bootstrapSwitchCssPath + '/bootstrap-switch.css',
+        production:  bootstrapSwitchCssPath + '/bootstrap-switch.min.css'
+      });
+    }
 
 
   } // :included

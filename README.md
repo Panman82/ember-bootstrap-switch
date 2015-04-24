@@ -24,7 +24,12 @@ following (depending on your ember-cli version) to install the addon and
 bower dependency for bootstrap-switch:
 
 ```bash
-# ember-cli 0.1.5 or higher
+# ember-cli 0.2.3 or higher
+ember install ember-bootstrap-switch
+```
+
+```bash
+# ember-cli from 0.1.5 to 0.2.2
 ember install:addon ember-bootstrap-switch
 ```
 
@@ -47,6 +52,35 @@ bower install --save bootstrap-switch
 
 Most of the configuration options are set directly on the bootstrap-switch
 Component. However, there are a couple addon configurations that can be changed.
+
+
+#### ember-bootstrap-switch addon
+
+Options for this addon are configured in the projects `Brocfile.js` file
+as an 'ember-bootstrap-switch' object property. Available options include:
+
+* `bootstrapVersion` [2|3]: By default 3, the major bootstrap version used in your project
+* `excludeCSS` [boolean]: By default, the theme's `bootstrap-switch.css` file will be imported
+* `excludeJS` [boolean]: By default, the `bootstrap-switch.js` file will be imported from Bootstrap
+
+Typically you'll
+
+```javascript
+// Brocfile.js
+/* global require, module */
+
+var EmberApp = require('ember-cli/lib/broccoli/ember-app');
+
+var app = new EmberApp({
+  'ember-bootstrap-switch': {
+    excludeCSS: true
+  }
+});
+
+// ... (documentation snipped)
+
+module.exports = app.toTree();
+```
 
 
 #### bootstrap-switch version
