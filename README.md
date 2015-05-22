@@ -11,8 +11,7 @@ project started with bootstrap, such as
 Then easily use bootstrap-switch in your templates with the included Ember
 Component, documentation below. All of the
 [bootstrap-switch options](http://www.bootstrap-switch.org/options.html) are
-exposed in the Component, which is easily customizable and robust. Please submit
-Issues and Pull Requests on the GitHub repo as needed.
+exposed in the Component, which is easily customizable and robust.
 
 
 
@@ -100,7 +99,7 @@ As mentioned in the [bootstrap-switch documentation](http://www.bootstrap-switch
 you can change the global defaults that bootstrap-switch uses. Simply create a
 new Ember Initializer, `ember g initializer bootstrap-switch-defaults`, and
 define them on [Ember's alias for jQuery](http://emberjs.com/api/#method__).
-Be sure to `import` Ember, as the default initializer code does not do so. Ex:
+Be sure to `import` Ember, as the generated initializer code does not do so. Ex:
 
 ```javascript
 // app/initializers/bootstrap-switch-defaults.js
@@ -308,8 +307,8 @@ export default Ember.Controller.extend({
 ```
 
 
-With the full implementation of HTMLbars and Ember 2.0's one-way bindings,
-here is what the template would then look like:
+With the full implementation of [Glimmer](http://emberjs.com/blog/2015/05/13/ember-1-12-released.html)
+and Ember 2.0's one-way bindings, here is what the template would then look like:
 
 ```html
 <!-- app/templates/foobar.hbs -->
