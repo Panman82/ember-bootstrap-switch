@@ -120,29 +120,10 @@ export default Ember.Component.extend({
   // The bootstrap-switch jQuery plugin does not observe attribute changes,
   // so we need to watch for the bootstrap-switch specific properties
   // and apply them to the bootstrap-switch plugin "manually".
-  optionChanged: Ember.observer(
-    'animate',
-    'base-class',
-    'handle-width',
-    'indeterminate',
-    'inverse',
-    'label-text',
-    'label-width',
-    'off-color',
-    'off-text',
-    'on-color',
-    'on-text',
-    'radio-all-off',
-    'size',
-    'wrapper-class',
-    'disabled',
-    'readonly',
-  function(component, key){
-    Ember.run(function(){
-      var option = Ember.String.camelize(key);
-      component.$().bootstrapSwitch(option, component.get(key));
-    });
-  }), // :optionChanged
+  optionChanged: function(component, key) {
+    var option = Ember.String.camelize(key);
+    component.$().bootstrapSwitch(option, component.get(key));
+  }, // :optionChanged
 
 
 
@@ -175,6 +156,24 @@ export default Ember.Component.extend({
     var component = this;
     var $element  = this.$();
 
+    // Add observers dynamically
+    this.addObserver('animate', this.optionChanged);
+    this.addObserver('base-class', this.optionChanged);
+    this.addObserver('handle-width', this.optionChanged);
+    this.addObserver('indeterminate', this.optionChanged);
+    this.addObserver('inverse', this.optionChanged);
+    this.addObserver('label-text', this.optionChanged);
+    this.addObserver('label-width', this.optionChanged);
+    this.addObserver('off-color', this.optionChanged);
+    this.addObserver('off-text', this.optionChanged);
+    this.addObserver('on-color', this.optionChanged);
+    this.addObserver('on-text', this.optionChanged);
+    this.addObserver('radio-all-off', this.optionChanged);
+    this.addObserver('size', this.optionChanged);
+    this.addObserver('wrapper-class', this.optionChanged);
+    this.addObserver('disabled', this.optionChanged);
+    this.addObserver('readonly', this.optionChanged);
+    
     // Set the <input> default `checked` state
     this.setDefaultChecked();
 
