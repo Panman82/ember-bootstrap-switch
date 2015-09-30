@@ -111,6 +111,8 @@ export default Ember.Component.extend({
     var checked = this.get('checked');
     if (type !== 'radio' && (checked === undefined || checked === null)) {
       return true;
+    }else{
+      return false;
     }
   }), // :indeterminate
 
