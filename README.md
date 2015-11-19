@@ -11,7 +11,16 @@ project started with bootstrap, such as
 Then easily use bootstrap-switch in your templates with the included Ember
 Component, documentation below. All of the
 [bootstrap-switch options](http://www.bootstrap-switch.org/options.html) are
-exposed in the Component, which is easily customizable and robust.
+exposed in the Component, which is easily customizable and robust. Most common,
+simple example: `{{bs-switch checked=boundProperty}}`
+
+
+
+
+## Requirements
+
+This addon requires ember and ember-cli 1.13+ (supports ember 2.x).
+For use with older versions of ember, use version 0.2.0 of this addon.
 
 
 
@@ -19,29 +28,11 @@ exposed in the Component, which is easily customizable and robust.
 ## Installation
 
 From within your [ember-cli](http://www.ember-cli.com/) project, run the
-following (depending on your ember-cli version) to install the addon and
-bower dependency for bootstrap-switch:
+following to install this npm package and the bower dependency for bootstrap-switch:
 
 ```bash
-# ember-cli 0.2.3 or higher
+# ember-cli 1.13 or higher
 ember install ember-bootstrap-switch
-```
-
-```bash
-# ember-cli from 0.1.5 to 0.2.2
-ember install:addon ember-bootstrap-switch
-```
-
-```bash
-# ember-cli from 0.0.43 to 0.1.4
-npm install --save-dev ember-bootstrap-switch
-ember generate ember-bootstrap-switch
-```
-
-```bash
-# ember-cli from 0.0.41 to 0.0.43
-npm install --save-dev ember-bootstrap-switch
-bower install --save bootstrap-switch
 ```
 
 
@@ -55,31 +46,33 @@ Component. However, there are a couple addon configurations that can be changed.
 
 #### ember-bootstrap-switch addon
 
-Options for this addon are configured in the projects `Brocfile.js` file
+Options for this addon are configured in the projects `ember-cli-build.js` file
 as an 'ember-bootstrap-switch' object property. Available options include:
 
 * `bootstrapVersion` [2|3]: By default 3, the major bootstrap version used in your project
-* `excludeCSS` [boolean]: By default, the theme's `bootstrap-switch.css` file will be imported
-* `excludeJS` [boolean]: By default, the `bootstrap-switch.js` file will be imported from Bootstrap
+* `excludeCSS` [boolean]: By default, the `bootstrap-switch.css` file will be imported
+* `excludeJS` [boolean]: By default, the `bootstrap-switch.js` file will be imported
 
 Typically you won't need to adjust any settings. However, if you want to use
 SASS/LESS instead of the default CSS you can exclude it from being imported. Ex:
 
 ```javascript
-// Brocfile.js
+// ember-cli-build.js
 /* global require, module */
-
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
-var app = new EmberApp({
-  'ember-bootstrap-switch': {
-    excludeCSS: true
-  }
-});
+module.exports = function(defaults) {
+  var app = new EmberApp(defaults, {
+    // Add options here
+    "ember-bootstrap-switch": {
+      excludeCSS: true
+    }
+  });
 
-// ... (documentation snipped)
+  // ... (documentation snipped)
 
-module.exports = app.toTree();
+  return app.toTree();
+};
 ```
 
 
@@ -115,7 +108,6 @@ export default {
   name: 'bootstrap-switch-defaults',
   initialize: initialize
 };
-
 ```
 
 
@@ -128,28 +120,26 @@ There are two names that you can use, `{{bootstrap-switch}}` or `{{bs-switch}}`.
 Both point to the same Component so it is your preference which to use.
 
 
-#### Attributes / Properties
+#### Attributes / Options
 
-The Component has many properties that can be modified, including all of the
+The Component has many attributes that can be modified, including all of the
 [bootstrap-switch options](http://www.bootstrap-switch.org/options.html).
 All options may be bound properties and will properly update the switch when
-changed. But most of the time you'll only bind the 'checked' property and set
+changed. But most of the time you'll only bind the `checked` property and set
 the others as attribute strings with your preference,
 `{{bs-switch checked=switchState on-text="Yes" off-text="No"}}`.
 
-All properties (except 'checked-default' and action handlers) will then be
-applied to the `<input>` element as their respective bootstrap-switch option
-and native element attribute names. This way the bootstrap-switch plugin
-reads the options from the element as is typically expected.
+Native HTML attributes will be applied to the DOM element as typically expected.
+However, bootstrap-switch options are passed in the options hash when initializing.
+Any subsequent option updates will be applied to bootstrap-switch using its "set" method.
 
 
-Component Attribute/Property | Bootstrap Switch Option | Native `<input>` Attribute | Notes
+Component Attribute | Bootstrap Switch Option | Native `<input>` Attribute | Notes
 -----------------------------|-------------------------|----------------------------|------
 animate          | animate        |       | Whether the switch animates between states
 autofocus        |                | Yes   | Should probably be handled elsewhere in Ember
 base-class       | baseClass      |       |
 checked          | state          |       | NOT the native HTML checked attr
-checked-default  |                |       | Defaults to the initial 'checked' state
 disabled         | disabled       | Yes   |
 form             |                | Yes   |
 formnovalidate   |                | Yes   |
@@ -159,20 +149,21 @@ inverse          | inverse        |       | Reverses what side the on/off labels
 label-text       | labelText      |       | Text in between the on/off labels
 label-width      | labelWidth     |       | Space between the on/off labels
 name             |                | Yes   | Required for radios
-off-color        | offColor       |       | Bootstrap contextual color name
+off-color        | offColor       |       | Bootstrap contextual color name (primary, success, info, warning, danger)
 off-text         | offText        |       |
-on-color         | onColor        |       | Bootstrap contextual color name
-on-destroy       |                |       | Action name sent on component destruction
-on-init          | onInit         |       | Action name sent on switch init
-on-switch-change | onSwitchChange |       | Action name sent on switch change
+on-color         | onColor        |       | Bootstrap contextual color name (primary, success, info, warning, danger)
+on-destroy       |                |       | Action sent on component destruction
+on-init          | onInit         |       | Action sent on switch init
+on-radio-active  |                |       | Action sent when the state is true (see usage below)
+on-switch-change | onSwitchChange |       | Action sent on switch change
 on-text          | onText         |       |
 radio-all-off    | radioAllOff    |       | When used as radios, can they all be unchecked
 readonly         | readonly       | Yes   |
 required         |                | Yes   |
-size             | size           |       | Bootstrap contextual button size name
+size             | size           |       | Bootstrap contextual button size name (lg, sm, xs)
 tabindex         |                | Yes   |
 type             |                | Yes   | Either 'checkbox' or 'radio'
-value            |                | Yes   |
+value            |                | Yes   | Useful when used as radios
 wrapper-class    | wrapperClass   |       |
 
 
@@ -181,10 +172,20 @@ wrapper-class    | wrapperClass   |       |
 *Warning: Do not use the bootstrap-switch 'state' as a property. Ember internals will throw a warning.*
 
 
-#### Action Handlers
+###### Indeterminate Default
+
+The 'indeterminate' option by default reads the 'checked' property and if
+`undefined` or `null` will return `true`, setting the switch to an indeterminate
+state (between on/off labels). This is helpful when passing a Promise in as the
+'checked' attribute, the switch will be "indeterminate" until the Promise resolves.
+To override this functionality, simply define the attribute:
+`{{bs-switch indeterminate="false"}}`
+
+
+#### Action Handlers / Events
 
 The Component also captures [bootstrap-switch events](http://www.bootstrap-switch.org/events.html)
-and exposes them as Ember actions. Depending on the event/action, your function
+and triggers them as Ember actions. Depending on the event/action, your function
 signature differs (below). Each action handler has access to the Component, which
 you can manipulate as needed, including:
 
@@ -196,6 +197,8 @@ function(component) {
   component.$().bootstrapSwitch(); // Direct access to the bootstrap-switch plugin
 }
 ```
+
+*Note: You cannot `component.set('option-name', 'option-value')` since all option changes are handled through the [new attribute hooks](http://emberjs.com/blog/2015/06/12/ember-1-13-0-released.html#toc_component-lifecycle-hooks). Use `component.$().bootstrapSwitch('option-name', 'option-value')` instead if needed.*
 
 
 ###### on-init
@@ -217,8 +220,25 @@ Fires when the bootstrap-switch triggers its 'switchChange' event.
 The Component also reacts to this by changing the 'checked' state.
 The 'state' argument will be a boolean, which reflects the new state.
 
+*Note: The signature changed between version 0.2.0 and 1.13.0, state was moved to the first position.*
+
 ```javascript
-function(component, event, state){
+function(state, component, event){
+  // your code
+}
+```
+
+
+###### on-switch-active
+
+Fires when the bootstrap-switch triggers its 'switchChange' event
+and the new state is `true`. The difference between this action and
+'on-switch-change' is that the value is passed as the first argument.
+This is useful when used as radios, to easily get the "active" value.
+See the radio example below.
+
+```javascript
+function(value, component, event){
   // your code
 }
 ```
@@ -238,21 +258,42 @@ function(component){
 ```
 
 
-###### Special Defaults
+#### Actions / Methods
 
-`'checked-default'` by default reads the initial 'checked' state but will not
-update when 'checked' is changed.
+All [bootstrap-switch toggle methods](http://www.bootstrap-switch.org/methods.html)
+are exposed as actions on the component. You will first need access to the component
+instance, which can be captured via the `on-init` event handler (example below),
+or any other handlers mentioned above. Available actions:
 
-The 'checked-default' state will be applied to the element via JavaScript
-as the 'defaultChecked' property, which in turn, applies the 'checked' attribute.
-Sounds confusing but it's a UX fix, this will allow a form `.reset()` to work properly.
+* toggleState
+* toggleAnimate
+* toggleDisabled
+* toggleReadonly
+* toggleIndeterminate
+* toggleInverse
 
-`'indeterminate'` by default observes the 'checked' property and if
-'undefined' or 'null' will be 'true', setting the switch to an indeterminate
-state (between on/off labels). Else it will remain 'undefined' and not be
-applied to the element. This only applies when the 'type' is not a 'radio'.
+```javascript
+// app/controllers/foobar.js
+import Ember from 'ember';
 
+export default Ember.Controller.extend({
+  switch: undefined,
+  actions: {
+    registerSwitch( component ){
+      this.set('switch', component);
+    },
+    toggleSwitch(){
+      this.get('switch').send('toggleState');
+    }
+  }
+});
+```
 
+```handlebars
+{{!-- app/templates/foobar.js --}}
+{{bs-switch on-init="registerSwitch"}}
+<button {{action "toggleSwitch"}}>Toggle</button>
+```
 
 
 #### Customizing
@@ -265,6 +306,7 @@ own name, `ember g component my-switch`. Then import the Component from the
 addon, and export your extended version. Ex:
 
 ```javascript
+// app/components/my-switch.js
 import BootstrapSwitchComponent from 'ember-bootstrap-switch/components/bootstrap-switch';
 export default BootstrapSwitchComponent.extend({
   // your changes here
@@ -278,13 +320,12 @@ export default BootstrapSwitchComponent.extend({
 ## Examples
 
 
-#### Ember 2.0, Data Down, Actions Up
+#### Usage as angle bracket components
 
-In the Ember 2.0 world, the methodology is data down, actions up. This means you
-pass the checked state down into the Component, but if the Component changes the
-state it should send an action back up with the new state. And once Ember 2.0 lands,
-one-way binding will be the default so actions will be used for the other direction.
-To emulate this methodology today, use the following:
+When used as an angle bracket component (once it lands in Ember), one-way data binding
+is enabled by default. That means the 'checked' property you pass in will not update
+automatically. There are two ways to handle this, re-enable two-way binding by using the
+`mut` helper or handle the change yourself using the 'on-switch-change' action.
 
 ```javascript
 // app/controllers/foobar.js
@@ -293,47 +334,32 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   checkedState: true,
   actions: {
-    switchChanged: function(component, event, state){
+    switchChanged(state){
       this.set('checkedState', state);
     }
   }
 });
 ```
 
-```
+```handlebars
 {{!-- app/templates/foobar.js --}}
-{{!-- checked-default is not bound and will not update on switchChange --}}
-{{bs-switch checked-default=checkedState on-switch-change="switchChanged"}}
-```
-
-
-With the full implementation of [Glimmer](http://emberjs.com/blog/2015/05/13/ember-1-12-released.html)
-and Ember 2.0's one-way bindings, here is what the template would then look like:
-
-```html
-<!-- app/templates/foobar.hbs -->
-<bs-switch checked={{checkedState}} on-switch-change={{action "switchChanged"}} />
-```
-
-
-Of course you'll always have the option to "re-enable" two-way binding.
-This way you don't need to use actions. Again, this is in Ember 2.0.
-
-```html
-<!-- app/templates/foobar.hbs -->
 <bs-switch checked={{mut checkedState}} />
+<bs-switch checked={{checkedState}} on-switch-change={{action 'switchChanged'}} />
 ```
 
 
 #### Usage as radios
 
-There are a couple issues with using bootstrap-switch as radios that affects
-usage in Ember. The 'switchChange' event currently only fires on the radio/switch
-that is clicked. Although helpful, the other radios/switches do not know about
-the change in state, so 'checked' bindings will not be updated in Ember.
+There are a [couple](https://github.com/nostalgiaz/bootstrap-switch/issues/418)
+[issues](https://github.com/nostalgiaz/bootstrap-switch/issues/423) with using
+bootstrap-switch as radios that affects usage in Ember. The 'switchChange' event
+currently only fires on the radio/switch that is clicked. Although helpful, the
+other radios/switches do not know about the change in state, so 'checked'
+bindings will not be updated in Ember.
 
-Currently the only way to use bootstrap-switch as radios is to look for the
-'on-switch-change' action and get the value of whatever was clicked.
+Currently the best way to use bootstrap-switch as radios is to use values to
+determine the active radio. Using a couple Helpers and computed properties,
+you can easily
 
 ```javascript
 // app/controllers/foobar.js
@@ -341,25 +367,57 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
   radioValue: null,
-  bazASelected: Ember.computed.equals('radioValue', 'bazA'),
-  bazBSelected: Ember.computed.equals('radioValue', 'bazB'),
-  bazCSelected: Ember.computed.equals('radioValue', 'bazC'),
+  fooASelected: Ember.computed.equals('radioValue', 'fooA'),
+  fooBSelected: Ember.computed.equals('radioValue', 'fooB'),
+  fooCSelected: Ember.computed.equals('radioValue', 'fooC')
+});
+```
+
+```handlebars
+{{!-- app/templates/foobar.js --}}
+{{bs-switch name="foo" value="fooA" checked=(readonly fooASelected) on-switch-active=(mut radioValue)}}
+{{bs-switch name="foo" value="fooB" checked=(readonly fooASelected) on-switch-active=(mut radioValue)}}
+{{bs-switch name="foo" value="fooC" checked=(readonly fooASelected) on-switch-active=(mut radioValue)}}
+```
+
+Or, using the [ember-truth-helpers](https://www.npmjs.com/package/ember-truth-helpers),
+only store the 'radioValue' and use the `eq` helper to determine checked state.
+
+```handlebars
+{{!-- app/templates/foobar.js --}}
+{{bs-switch name="foo" value="fooA" checked=(eq radioValue "fooA") on-switch-active=(mut radioValue)}}
+{{bs-switch name="foo" value="fooB" checked=(eq radioValue "fooB") on-switch-active=(mut radioValue)}}
+{{bs-switch name="foo" value="fooC" checked=(eq radioValue "fooC") on-switch-active=(mut radioValue)}}
+```
+
+#### Usage as radios with 'radioAllOff'
+
+In addition to the radio issues mentioned above, if used with the 'radioAllOff' option,
+the above radio examples will not work properly when all radios are "off". To fix this,
+you'll need to handle the `radioValue` state manually using the 'on-switch-change' action.
+
+```javascript
+// app/controllers/foobar.js
+import Ember from 'ember';
+
+export default Ember.Controller.extend({
+  radioValue: null,
   actions: {
-    switchChanged: function(component, event, state){
+    switchChanged( state ){
       // 'state' will typically always be `true`,
       // unless the 'radio-all-off' option is `true`
-      var newValue = (state ? component.get('value') : null);
+      const newValue = (state ? component.get('value') : null);
       this.set('radioValue', newValue);
     }
   }
 });
 ```
 
-```
+```handlebars
 {{!-- app/templates/foobar.js --}}
-{{bs-switch name="baz" value="bazA" checked=bazASelected on-switch-change="switchChanged"}}
-{{bs-switch name="baz" value="bazB" checked=bazASelected on-switch-change="switchChanged"}}
-{{bs-switch name="baz" value="bazC" checked=bazASelected on-switch-change="switchChanged"}}
+{{bs-switch name="foo" value="fooA" checked=(eq radioValue "fooA") on-switch-change="switchChanged"}}
+{{bs-switch name="foo" value="fooB" checked=(eq radioValue "fooB") on-switch-change="switchChanged"}}
+{{bs-switch name="foo" value="fooC" checked=(eq radioValue "fooC") on-switch-change="switchChanged"}}
 ```
 
 This documentation will be updated once the bootstrap-switch radio issues are fixed.
