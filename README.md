@@ -172,7 +172,7 @@ off-text         | offText        |       |
 on-color         | onColor        |       | Bootstrap contextual color name (primary, success, info, warning, danger)
 on-destroy       |                |       | Action sent on component destruction
 on-init          | onInit         |       | Action sent on switch init
-on-radio-active  |                |       | Action sent when the state is true (see usage below)
+on-switch-active |                |       | Action sent when the state is true (see usage below)
 on-switch-change | onSwitchChange |       | Action sent on switch change
 on-text          | onText         |       |
 radio-all-off    | radioAllOff    |       | When used as radios, can they all be unchecked
@@ -203,9 +203,9 @@ To override this functionality, simply define the attribute:
 #### Action Handlers / Events
 
 The Component also captures [bootstrap-switch events](http://www.bootstrap-switch.org/events.html)
-and triggers them as Ember actions. Depending on the event/action, your function
-signature differs (below). Each action handler has access to the Component, which
-you can manipulate as needed, including:
+and triggers them as Ember actions. Ex: `{{bs-switch checked="true" on-switch-change="handleChange"}}`
+Depending on the event/action, your function signature differs (below). Each action handler has access
+to the Component, which you can manipulate as needed, including:
 
 ```javascript
 function(component) {
