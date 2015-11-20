@@ -53,8 +53,13 @@ as an 'ember-bootstrap-switch' object property. Available options include:
 * `excludeCSS` [boolean]: By default, the `bootstrap-switch.css` file will be imported
 * `excludeJS` [boolean]: By default, the `bootstrap-switch.js` file will be imported
 
-Typically you won't need to adjust any settings. However, if you want to use
-SASS/LESS instead of the default CSS you can exclude it from being imported. Ex:
+
+#### Usage with ember-cli-less
+
+bootstrap-switch includes Less files which you can use with your project
+instead of using the default CSS files. Typically you wouldn't do this unless
+you are already using Less elsewhere in your project. You'll need to exclude the
+default CSS files, include the bower path, and finally import the Less files. Ex:
 
 ```javascript
 // ember-cli-build.js
@@ -66,6 +71,12 @@ module.exports = function(defaults) {
     // Add options here
     "ember-bootstrap-switch": {
       excludeCSS: true
+    },
+    lessOptions: {
+      paths: [
+        "bower_components/bootstrap/less",
+        "bower_components/bootstrap-switch/src/less/bootstrap3"
+      ]
     }
   });
 
@@ -73,6 +84,12 @@ module.exports = function(defaults) {
 
   return app.toTree();
 };
+```
+
+```less
+// app/styles/app.less
+@import "bootstrap";
+@import "bootstrap-switch";
 ```
 
 
