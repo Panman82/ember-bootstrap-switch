@@ -11,9 +11,12 @@ module.exports = {
 
 
   included: function(app) {
+    // Per the ADDON_HOOKS.md document
+    // https://github.com/ember-cli/ember-cli/blob/master/ADDON_HOOKS.md#included
+    this._super.included.apply(this, arguments);
 
 
-    // Addon options from the apps Brocfile.js
+    // Addon options from the apps ember-cli-build.js
     var options = app.options[this.name] || {};
 
 
