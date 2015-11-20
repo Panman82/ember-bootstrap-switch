@@ -56,10 +56,11 @@ as an 'ember-bootstrap-switch' object property. Available options include:
 
 #### Usage with ember-cli-less
 
-bootstrap-switch includes Less files which you can use with your project
-instead of using the default CSS files. Typically you wouldn't do this unless
-you are already using Less elsewhere in your project. You'll need to exclude the
-default CSS files, include the bower path, and finally import the Less files. Ex:
+bootstrap-switch includes [Less](http://lesscss.org/) files which you can use with your
+project instead of using the default CSS files. Typically you wouldn't do this unless
+you are already using [ember-cli-less](https://www.npmjs.com/package/ember-cli-less)
+elsewhere in your project. You'll need to exclude the default CSS files, include the
+bower path, and finally import the Less files. Ex:
 
 ```javascript
 // ember-cli-build.js
