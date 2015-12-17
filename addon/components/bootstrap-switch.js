@@ -96,8 +96,9 @@ export default Ember.Component.extend({
 
 
 
-  // Need to keep track of the initial attributes for 'createSwitch()'
-  saveInitalAttrs: Ember.on('didInitAttrs', function( attrs ){
+  // Need to keep track of the initial attributes for 'didRender()'
+  didInitAttrs( attrs ){
+    this._super(...arguments);
     this.set('_initialAttrs', attrs.attrs);
   }), // :saveInitialAttrs
 
@@ -107,7 +108,8 @@ export default Ember.Component.extend({
   // Setup task to create the switch using defined options
   // By using the 'didRender' hook, instead of 'didInsertElement',
   // this component should work properly with Fastboot (not tested)
-  createSwitch: Ember.on('didRender', function(){
+  didRender(){
+    this._super(...arguments);
 
     // Since this hook will run upon subsequent re-renders,
     // we only need to initialize the switch once
@@ -175,7 +177,8 @@ export default Ember.Component.extend({
 
   // Task to update the bootstrap-switch as options are changed.
   // This replaces the observers used in an older version of this addon.
-  updateSwitch: Ember.on('didUpdateAttrs', function( attrs ){
+  didUpdateAttrs( attrs ){
+    this._super(...arguments);
     const {newAttrs, oldAttrs} = attrs; // cool ES2015 syntax to destructure named properties
 
     // Skip if bootstrap-switch not created yet
@@ -250,7 +253,8 @@ export default Ember.Component.extend({
 
 
   // Tear down task to update state flags, destroy the switch, and trigger the destroy action
-  destroySwitch: Ember.on('willDestroyElement', function(){
+  willDestroyElement(){
+    this._super(...arguments);
 
     // Ignore if not yet initialized
     if (!this.get('switchInitialized')) {
