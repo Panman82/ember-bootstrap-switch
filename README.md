@@ -394,8 +394,8 @@ export default Ember.Controller.extend({
 ```handlebars
 {{!-- app/templates/foobar.js --}}
 {{bs-switch name="foo" value="fooA" checked=(readonly fooASelected) on-switch-active=(mut radioValue)}}
-{{bs-switch name="foo" value="fooB" checked=(readonly fooASelected) on-switch-active=(mut radioValue)}}
-{{bs-switch name="foo" value="fooC" checked=(readonly fooASelected) on-switch-active=(mut radioValue)}}
+{{bs-switch name="foo" value="fooB" checked=(readonly fooBSelected) on-switch-active=(mut radioValue)}}
+{{bs-switch name="foo" value="fooC" checked=(readonly fooCSelected) on-switch-active=(mut radioValue)}}
 ```
 
 Or, using the [ember-truth-helpers](https://www.npmjs.com/package/ember-truth-helpers),
@@ -433,9 +433,9 @@ export default Ember.Controller.extend({
 
 ```handlebars
 {{!-- app/templates/foobar.js --}}
-{{bs-switch name="foo" value="fooA" checked=(eq radioValue "fooA") on-switch-change="switchChanged"}}
-{{bs-switch name="foo" value="fooB" checked=(eq radioValue "fooB") on-switch-change="switchChanged"}}
-{{bs-switch name="foo" value="fooC" checked=(eq radioValue "fooC") on-switch-change="switchChanged"}}
+{{bs-switch name="foo" value="fooA" checked=(eq radioValue "fooA") on-switch-change="switchChanged" radioAllOff=true}}
+{{bs-switch name="foo" value="fooB" checked=(eq radioValue "fooB") on-switch-change="switchChanged" radioAllOff=true}}
+{{bs-switch name="foo" value="fooC" checked=(eq radioValue "fooC") on-switch-change="switchChanged" radioAllOff=true}}
 ```
 
 This documentation will be updated once the bootstrap-switch radio issues are fixed.
