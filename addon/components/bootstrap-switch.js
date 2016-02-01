@@ -159,7 +159,7 @@ export default Ember.Component.extend({
       if (this.switchOptions[ attrKeyCamelized ] === 'boolean') {
         options[ attrKeyCamelized ] = isTruthy( attrValue );
       } else {
-        options[ attrKeyCamelized ] = attrValue;
+        options[ attrKeyCamelized ] = attrValue.toString();
       }
 
     } // for ()
