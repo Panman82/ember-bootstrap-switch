@@ -27,6 +27,25 @@ export function isTruthy( value ) {
 
 
 
+// Convert the value to the proper option type.
+// This is especially useful for string booleans ("false"),
+// and Ember SafeString objects (typically from intl addons)
+export function convertValue( value, type ) {
+  if ( type === 'boolean' ) {
+    return isTruthy( value );
+  } else if ( type === 'string' ) {
+    Ember.assert('Object must have a .toString() method!', !value.toString);
+    return value.toString();
+  } else if ( type === 'array' ) {
+    return ( Array.isArray( value ) ? value : [ value ] );
+  } else {
+    return value;
+  }
+} // convertValue()
+
+
+
+
 export default Ember.Component.extend({
   tagName: 'input',
   type: 'checkbox',
@@ -78,7 +97,7 @@ export default Ember.Component.extend({
     handleWidth   : 'string',
     labelWidth    : 'string',
     baseClass     : 'string',
-    wrapperClass  : 'string'
+    wrapperClass  : 'array'
     // onInit and onSwitchChange handled by the component
   }, // :switchOptions
 
@@ -155,12 +174,8 @@ export default Ember.Component.extend({
       // https://github.com/emberjs/ember.js/blob/v2.1.0/packages/ember-views/lib/compat/attrs-proxy.js#L54
       let attrValue = this.getAttrFor( initialAttrs, attrKey );
 
-      // Use the 'isTruthy' function for booleans (to convert string "false")
-      if (this.switchOptions[ attrKeyCamelized ] === 'boolean') {
-        options[ attrKeyCamelized ] = isTruthy( attrValue );
-      } else {
-        options[ attrKeyCamelized ] = attrValue;
-      }
+      // Convert the value to the proper option type
+      options[ attrKeyCamelized ] = convertValue( attrValue, this.switchOptions[ attrKeyCamelized ]);
 
     } // for ()
 
@@ -221,6 +236,10 @@ export default Ember.Component.extend({
         continue;
       }
 
+      // Convert the value to the proper option type
+      let convertedValue = convertValue( newValue, this.switchOptions[ attrKeyCamelized ]);
+
+      // Special case when updating the checked state
       if (attrKeyCamelized === 'state') {
 
         // If the old checked state was undefined, but is now defined, then..
@@ -229,15 +248,13 @@ export default Ember.Component.extend({
           (oldValue === undefined || oldValue === null) &&
           (newValue !== undefined && newValue !== null)
         ) {
-          $element.prop('defaultChecked', isTruthy(newValue)); // Enables a <form> reset to work properly
+          $element.prop('defaultChecked', convertedValue); // Enables a <form> reset to work properly
         }
 
         // Third param == skip the switchChanged event
-        $element.bootstrapSwitch( attrKeyCamelized, isTruthy(newValue), true );
-      } else if (this.switchOptions[ attrKeyCamelized ] === 'boolean') {
-        $element.bootstrapSwitch( attrKeyCamelized, isTruthy(newValue) );
+        $element.bootstrapSwitch( attrKeyCamelized, convertedValue, true );
       } else {
-        $element.bootstrapSwitch( attrKeyCamelized, newValue );
+        $element.bootstrapSwitch( attrKeyCamelized, convertedValue );
       }
 
     } // for ()
