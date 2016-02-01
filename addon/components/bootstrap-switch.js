@@ -91,7 +91,7 @@ export default Ember.Component.extend({
   indeterminate: Ember.computed('checked', function(){
     const checked = this.get('checked');
     return (checked === null || checked === undefined);
-  }),
+  }), // :indeterminate
 
 
 
@@ -100,7 +100,7 @@ export default Ember.Component.extend({
   didInitAttrs( attrs ){
     this._super(...arguments);
     this.set('_initialAttrs', attrs.attrs);
-  }), // :saveInitialAttrs
+  }, // didInitAttrs()
 
 
 
@@ -170,7 +170,7 @@ export default Ember.Component.extend({
     // Create the switch with defined options
     $element.bootstrapSwitch( options );
 
-  }), // :createSwitch
+  }, // didRender()
 
 
 
@@ -247,7 +247,7 @@ export default Ember.Component.extend({
       $element.bootstrapSwitch( 'indeterminate', this.get('indeterminate') );
     }
 
-  }), // :updateSwitch
+  }, // didUpdateAttrs()
 
 
 
@@ -272,7 +272,7 @@ export default Ember.Component.extend({
       this.sendAction('on-destroy', this);
     }
 
-  }), // :destroySwitch
+  }, // willDestroyElement()
 
 
 
