@@ -399,7 +399,7 @@ export default Ember.Controller.extend({
 ```
 
 Or, using the [ember-truth-helpers](https://www.npmjs.com/package/ember-truth-helpers),
-only store the 'radioValue' and use the `eq` helper to determine checked state.
+you only need `radioValue` and use the `eq` helper to determine checked state.
 
 ```handlebars
 {{!-- app/templates/foobar.js --}}
@@ -410,7 +410,7 @@ only store the 'radioValue' and use the `eq` helper to determine checked state.
 
 #### Usage as radios with 'radioAllOff'
 
-In addition to the radio issues mentioned above, if used with the 'radioAllOff' option,
+In addition to the radio issues mentioned above, if used with the 'radio-all-off' option,
 the above radio examples will not work properly when all radios are "off". To fix this,
 you'll need to handle the `radioValue` state manually using the 'on-switch-change' action.
 
@@ -421,7 +421,7 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   radioValue: null,
   actions: {
-    switchChanged( state ){
+    switchChanged( state, component ){
       // 'state' will typically always be `true`,
       // unless the 'radio-all-off' option is `true`
       const newValue = (state ? component.get('value') : null);
@@ -433,9 +433,9 @@ export default Ember.Controller.extend({
 
 ```handlebars
 {{!-- app/templates/foobar.js --}}
-{{bs-switch name="foo" value="fooA" checked=(eq radioValue "fooA") on-switch-change="switchChanged" radioAllOff=true}}
-{{bs-switch name="foo" value="fooB" checked=(eq radioValue "fooB") on-switch-change="switchChanged" radioAllOff=true}}
-{{bs-switch name="foo" value="fooC" checked=(eq radioValue "fooC") on-switch-change="switchChanged" radioAllOff=true}}
+{{bs-switch name="foo" value="fooA" checked=(eq radioValue "fooA") on-switch-change="switchChanged" radio-all-off=true}}
+{{bs-switch name="foo" value="fooB" checked=(eq radioValue "fooB") on-switch-change="switchChanged" radio-all-off=true}}
+{{bs-switch name="foo" value="fooC" checked=(eq radioValue "fooC") on-switch-change="switchChanged" radio-all-off=true}}
 ```
 
 This documentation will be updated once the bootstrap-switch radio issues are fixed.
