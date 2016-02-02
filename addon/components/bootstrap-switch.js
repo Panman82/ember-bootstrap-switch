@@ -34,7 +34,7 @@ export function convertValue( value, type ) {
   if ( type === 'boolean' ) {
     return isTruthy( value );
   } else if ( type === 'string' ) {
-    Ember.assert('Object must have a .toString() method!', !value.toString);
+    Ember.assert('Object must have a .toString() method!', typeof value.toString === 'function');
     return value.toString();
   } else if ( type === 'array' ) {
     return ( Array.isArray( value ) ? value : [ value ] );
