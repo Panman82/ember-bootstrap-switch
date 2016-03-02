@@ -19,7 +19,7 @@ simple example: `{{bs-switch checked=boundProperty}}`
 
 ## Compatibility
 
-This addon works with ember and ember-cli 1.13+ (supports ember 2.x).
+This addon works with ember and ember-cli 1.13+ (including 2.x).
 For use with older versions of ember, use version 0.2.0 of this addon.
 
 
