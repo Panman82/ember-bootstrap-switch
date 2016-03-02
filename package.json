@@ -24,7 +24,7 @@
     "radio"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified, PRs welcome\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "ember-cli-babel": "^5.1.5"
