@@ -10,14 +10,20 @@ module.exports = {
   name: 'ember-bootstrap-switch',
 
 
-  included: function(app) {
+  included: function(app, parentAddon) {
+
     // Per the ADDON_HOOKS.md document
     // https://github.com/ember-cli/ember-cli/blob/master/ADDON_HOOKS.md#included
     this._super.included.apply(this, arguments);
 
 
+    // Per the ember-cli documentation
+    // http://ember-cli.com/extending/#broccoli-build-options-for-in-repo-addons
+    var target = (parentAddon || app);
+
+
     // Addon options from the apps ember-cli-build.js
-    var options = app.options[this.name] || {};
+    var options = target.options[this.name] || {};
 
 
     // Version of bootstrap-switch to use
@@ -25,7 +31,7 @@ module.exports = {
 
 
     // Path to bootstrap-switch in bower
-    var bootstrapSwitchPath    = app.bowerDirectory  + '/bootstrap-switch/dist';
+    var bootstrapSwitchPath    = target.bowerDirectory  + '/bootstrap-switch/dist';
     var bootstrapSwitchCssPath = bootstrapSwitchPath + '/css/bootstrap' + options.boostrapVersion;
 
 
@@ -33,7 +39,7 @@ module.exports = {
     if (!fs.existsSync(bootstrapSwitchPath)) {
       throw new Error(
         this.name + ': bootstrap-switch is not available from bower (' + bootstrapSwitchPath + '), ' +
-        'install into your project by `bower install bootstrap-switch --save`'
+        'install into your project by running `bower install bootstrap-switch --save`'
       );
     }
 
@@ -49,7 +55,7 @@ module.exports = {
 
     // Import bootstrap-switch js
     if (!options.excludeJS) {
-      app.import({
+      target.import({
         development: bootstrapSwitchPath + '/js/bootstrap-switch.js',
         production:  bootstrapSwitchPath + '/js/bootstrap-switch.min.js'
       });
@@ -58,7 +64,7 @@ module.exports = {
 
     // Import bootstrap-switch css
     if (!options.excludeCSS) {
-      app.import({
+      target.import({
         development: bootstrapSwitchCssPath + '/bootstrap-switch.css',
         production:  bootstrapSwitchCssPath + '/bootstrap-switch.min.css'
       });
