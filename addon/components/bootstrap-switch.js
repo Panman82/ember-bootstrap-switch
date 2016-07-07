@@ -116,10 +116,10 @@ export default Ember.Component.extend({
 
 
   // Need to keep track of the initial attributes for 'didRender()'
-  didInitAttrs( attrs ){
+  init(){
     this._super(...arguments);
-    this.set('_initialAttrs', attrs.attrs);
-  }, // didInitAttrs()
+    this.set('_initialAttrs', this.get('attrs'));
+  }, // init()
 
 
 
