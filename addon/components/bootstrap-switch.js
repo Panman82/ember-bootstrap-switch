@@ -102,6 +102,12 @@ export default Ember.Component.extend({
   }, // :switchOptions
 
 
+  // Shim for deprecated ember function
+  getAttrFor: function (attrs, key) {
+    let val = attrs[key];
+    return val && val.value !== undefined ? val.value : val;
+  },
+
 
 
   // Helpful default, set 'indeterminate' state to true
