@@ -1,6 +1,9 @@
 ember-bootstrap-switch
 ======================
 
+> This addon has been deprecated due to fact that bootstrap-switch has had
+> [no active development recently](https://github.com/nostalgiaz/bootstrap-switch/commits/master).
+
 This [ember-cli](http://www.ember-cli.com/) addon integrates the
 [bootstrap-switch](http://www.bootstrap-switch.org/) plugin with your project.
 It imports the required bootstrap-switch files into your build but does NOT
