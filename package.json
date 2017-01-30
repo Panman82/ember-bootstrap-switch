@@ -1,7 +1,7 @@
 {
   "name": "ember-bootstrap-switch",
   "description": "An ember-cli addon to import bootstrap-switch and provide an Ember component.",
-  "version": "1.13.3",
+  "version": "1.13.4",
   "license": "MIT",
   "author": "Ryan <panman82@gmail.com>",
   "homepage": "https://github.com/Panman8201/ember-bootstrap-switch",
